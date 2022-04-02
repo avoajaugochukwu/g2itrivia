@@ -1,8 +1,8 @@
 export default interface IQuestion {
   category: string;
-  type: string;
-  difficulty: string,
-  question: string,
-  correct_answer: string,
+  correct_answer: string;
+  difficulty: string;
   incorrect_answers: string[]
+  question: string;
+  type: string;
 }
