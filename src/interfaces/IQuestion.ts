@@ -7,12 +7,17 @@ export default interface IQuestion {
   type: string;
 }
 
-export interface IQuestionState {
+export interface IResult {
+  isCorrect: boolean;
+  question: string
+}
+
+export interface IQuestionContext {
   questions: null | IQuestion[];
   loading: boolean;
   error: null | string;
-  currentQuestionId: number;
   currentQuestion: null | IQuestion;
-  getCurrentQuestion: () => void;
-  scoreQuestion: (choice: boolean, question: IQuestion) => void;
+  getCurrentQuestion: (id: number) => void;
+  scoreQuestion: (choice: string, question: IQuestion) => void;
+  result: IResult[]
 }

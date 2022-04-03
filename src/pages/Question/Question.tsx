@@ -1,48 +1,65 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Loading from '../../components/Loading/Loading';
 import QuestionCard from '../../components/Question/QuestionCard';
+import { IQuestionContext } from '../../interfaces/IQuestion';
 
 import QuestionContext from '../../store/contexts/QuestionContext';
 
 const Question = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { questionId } = useParams<string>();
-  const trivia = useContext(QuestionContext);
+  const { questionId } = useParams<{ questionId: string }>();
+  const questionContext = useContext(QuestionContext) as IQuestionContext;
   const navigate = useNavigate();
 
-  // if (trivia.loading) return <h1 className="text-9xl">Loading</h1>;
+  if (!questionId) return (<Loading />);
+  // console.log(questionId, 'questionId');
+  // if (questionContext.loading) return <h1 className="text-9xl">Loading</h1>;
 
-  const handleNextQuestion = (choice: boolean) => {
-    console.log(choice, 'choice');
-    // if (!trivia.setCurrentQuestionId) return;
-    // const newCurrentId = trivia?.currentQuestionId + 1;
-    // trivia.setCurrentQuestionId(newCurrentId);
-    trivia.getCurrentQuestion();
-    if (trivia.currentQuestion) {
-      trivia.scoreQuestion(choice, trivia.currentQuestion);
-    }
-    navigate(`/question/${trivia.currentQuestionId}`);
-    // change to constant
-    if (trivia.currentQuestionId === 11) {
+  const getPageNextNumber = (id: string): number => parseInt(id, 10) + 1;
+
+  const getPage = (id: number) => {
+    if (id < 11) {
+      navigate(`/question/${id}`);
+    } else {
       navigate('/result');
     }
+  };
+
+  const handleNextQuestion = (choice: string) => {
+    const nextPageNumber = getPageNextNumber(questionId);
+    getPage(nextPageNumber);
+    // console.log(choice, 'choice');
+    // if (!questionContext.setCurrentQuestionId) return;
+    // const newCurrentId = questionContext?.currentQuestionId + 1;
+    // questionContext.setCurrentQuestionId(newCurrentId);
+    questionContext.getCurrentQuestion(nextPageNumber);
+    if (questionContext.currentQuestion) {
+      questionContext.scoreQuestion(choice, questionContext.currentQuestion);
+    }
+    // navigate(`/question/${questionContext.currentQuestionId}`);
+    // change to constant
+    // if (questionContext.currentQuestionId === 11) {
+    //   navigate('/result');
+    // }
   };
 
   return (
     <>
       {/* {JSON.stringify(currentQuestion)} */}
-      {/* {
-        trivia.questions
+      {
+        questionContext.questions
         && (
           <>
             <QuestionCard
-              question={trivia.currentQuestion}
+              questionNumber={getPageNextNumber(questionId)}
+              question={questionContext.currentQuestion}
               handleNextQuestion={handleNextQuestion}
             />
           </>
         )
-      } */}
+      }
     </>
   );
 };

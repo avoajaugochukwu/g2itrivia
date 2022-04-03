@@ -1,26 +1,8 @@
 import React from 'react';
-import { IQuestionState } from '../../interfaces/IQuestion';
-
-// export interface IQuestionContext {
-//   questions: null | IQuestion[];
-//   loading: boolean;
-//   error: null | string;
-//   currentQuestion: null | IQuestion;
-//   nextQuestion: () => void
-// }
-
-const questionContext: IQuestionState = {
-  questions: [],
-  loading: false,
-  error: null,
-  currentQuestionId: 1,
-  currentQuestion: null,
-  getCurrentQuestion: () => {},
-  scoreQuestion: () => {},
-};
+import { IQuestionContext } from '../../interfaces/IQuestion';
 
 const QuestionContext = React
-  .createContext<IQuestionState>(questionContext);
+  .createContext<IQuestionContext | null>(null);
 
 export default QuestionContext;
 // const getLocalStorage = (storeKey) => {

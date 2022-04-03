@@ -2,46 +2,22 @@ import React, {
   useEffect, ReactNode, FC, useState,
 } from 'react';
 import useQuestions from '../../hooks/useQuestions';
-import IQuestion from '../../interfaces/IQuestion';
-// import IQuestion from '../../interfaces/IQuestion';
+import IQuestion, { IResult } from '../../interfaces/IQuestion';
 import QuestionContext from '../contexts/QuestionContext';
-
-// export interface IQuestionContext {
-//   questions: null | IQuestion[];
-//   loading: boolean;
-//   error: null | string;
-//   currentQuestionId: number;
-//   // updateCurrentQuestionId: () => void
-// }
 
 type Props = { children: ReactNode };
 
 const QuestionProvider: FC<Props> = ({ children }) => {
-  // const [questions, setQuestions] = useState([]);
-
-  const [result, setResult] = useState<IQuestion[] | null>();
+  const [result, setResult] = useState<IResult[]>([]);
   const [{ questions, loading, error }, fetchQuestions] = useQuestions();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [currentQuestionId, setCurrentQuestionId] = useState<number>(1);
+  // const [currentQuestionId, setCurrentQuestionId] = useState<number>(0);
   const [currentQuestion, setCurrentQuestion] = useState<null | IQuestion>(null);
 
-  const getCurrentQuestion = (): void => {
+  const getCurrentQuestion = (id: number): void => {
     if (questions) {
-      setCurrentQuestion(questions[currentQuestionId - 1]);
-      setCurrentQuestionId(currentQuestionId + 1);
+      setCurrentQuestion(questions[id - 1]);
+      // setCurrentQuestionId(currentQuestionId + 1);
     }
-  };
-
-  if (!questions) return (<h1>Loading</h1>);
-  if (!result) return (<h1>Loading</h1>);
-
-  const scoreQuestion = (choice: boolean, question: IQuestion) => {
-    console.log(choice, 'choice');
-    console.log(question, 'IQuestion');
-    const a = questions?.filter((q) => q.question === question.question);
-    const b = [...result, ...a];
-    setResult(b);
-    console.log(a);
   };
 
   // Usecallback so that it won't run again
@@ -51,19 +27,38 @@ const QuestionProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (questions && questions?.length > 0) {
-      setCurrentQuestion(questions[currentQuestionId - 1]);
+      setCurrentQuestion(questions[0]);
     }
   }, [loading]);
+
+  const scoreQuestion = (choice: string, question: IQuestion) => {
+    if (result && questions) {
+      const filteredQuestion = questions.filter((q) => q.question === question.question);
+      const firstQuestion = filteredQuestion[0];
+      const newResult = [...result, {
+        isCorrect: firstQuestion.correct_answer === choice,
+        question: firstQuestion.question,
+      }];
+      setResult(newResult);
+      // const b = [...result, {
+      //   isCorrect: q.correct_answer === choice,
+      //   choice,
+      //   correct_answer: q.correct_answer,
+      //   question: q.question,
+      // }];
+      // console.log(result);
+    }
+  };
 
   return (
     <QuestionContext.Provider value={{
       questions,
       loading,
       error,
-      currentQuestionId,
       currentQuestion,
       getCurrentQuestion,
       scoreQuestion,
+      result,
     }}
     >
       {children}
