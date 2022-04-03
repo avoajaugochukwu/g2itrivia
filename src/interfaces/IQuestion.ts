@@ -6,3 +6,13 @@ export default interface IQuestion {
   question: string;
   type: string;
 }
+
+export interface IQuestionState {
+  questions: null | IQuestion[];
+  loading: boolean;
+  error: null | string;
+  currentQuestionId: number;
+  currentQuestion: null | IQuestion;
+  getCurrentQuestion: () => void;
+  scoreQuestion: (choice: boolean, question: IQuestion) => void;
+}

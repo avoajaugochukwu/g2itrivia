@@ -3,13 +3,13 @@ import { getQuestionSessionURL } from '../utils/helper.functions';
 import IQuestion from '../interfaces/IQuestion';
 import { TRIVIA_BASE_URL } from '../utils/contants';
 
-interface Result {
-  data?: IQuestion[];
+interface IQuestionFetch {
+  questions: null | IQuestion[];
   loading: boolean;
   error: null | string;
 }
 
-const useQuestions = (): [Result, () => void] => {
+const useQuestions = (): [IQuestionFetch, () => void] => {
   const questionURL = getQuestionSessionURL({
     amount: 10,
     difficulty: 'hard',
@@ -18,7 +18,8 @@ const useQuestions = (): [Result, () => void] => {
 
   const URL = TRIVIA_BASE_URL + questionURL;
 
-  const [result, setResult] = useState<Result>({
+  const [result, setResult] = useState<IQuestionFetch>({
+    questions: null,
     loading: false,
     error: null,
   });
@@ -50,7 +51,7 @@ const useQuestions = (): [Result, () => void] => {
         .then((data) => setResult((prevState) => ({
           ...prevState,
           loading: false,
-          data: data.results,
+          questions: data.results,
         })))
         .catch(onError);
     };
