@@ -14,11 +14,11 @@ const ResultItem: FC<Props> = ({ result }) => {
 
   return (
     <div className={`flex my-2 w-full px-1 rounded-md ${bgColor}`} key={result.question}>
-      <div className="grid justify-items-center items-center h-20">
-        <img src={result.isCorrect ? `${plusSVG}` : `${minusSVG}`} alt="plus" />
+      <div className="grid justify-items-center items-center h-20 w-12">
+        <img className="h-4 w-4" src={result.isCorrect ? `${plusSVG}` : `${minusSVG}`} alt="plus" />
       </div>
       <div className="grid justify-items-center items-center">
-        <p>
+        <p className="text-left pl-6">
           {cleanString(result.question)}
         </p>
       </div>

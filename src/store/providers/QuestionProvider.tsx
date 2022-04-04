@@ -20,7 +20,6 @@ const QuestionProvider: FC<Props> = ({ children }) => {
     }
   };
 
-  // Usecallback so that it won't run again
   useEffect(() => {
     fetchQuestions();
   }, []);
@@ -40,13 +39,6 @@ const QuestionProvider: FC<Props> = ({ children }) => {
         question: firstQuestion.question,
       }];
       setResult(newResult);
-      // const b = [...result, {
-      //   isCorrect: q.correct_answer === choice,
-      //   choice,
-      //   correct_answer: q.correct_answer,
-      //   question: q.question,
-      // }];
-      // console.log(result);
     }
   };
 

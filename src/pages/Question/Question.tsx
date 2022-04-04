@@ -14,8 +14,6 @@ const Question = () => {
   const navigate = useNavigate();
 
   if (!questionId) return (<Loading />);
-  // console.log(questionId, 'questionId');
-  // if (questionContext.loading) return <h1 className="text-9xl">Loading</h1>;
 
   const getPageNextNumber = (id: string): number => parseInt(id, 10) + 1;
 
