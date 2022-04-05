@@ -1,22 +1,23 @@
 import React, {
   useEffect, ReactNode, FC, useState,
 } from 'react';
+// import Loading from '../../components/Loading/Loading';
 import useQuestions from '../../hooks/useQuestions';
 import IQuestion, { IResult } from '../../interfaces/IQuestion';
+// import Error from '../../pages/Error';
+// import Error from '../../pages/ErrorBoundary';
 import QuestionContext from '../contexts/QuestionContext';
 
 type Props = { children: ReactNode };
 
 const QuestionProvider: FC<Props> = ({ children }) => {
   const [result, setResult] = useState<IResult[]>([]);
-  const [{ questions, loading, error }, fetchQuestions] = useQuestions();
-  // const [currentQuestionId, setCurrentQuestionId] = useState<number>(0);
+  const [{ questions = [], loading = false, error = null }, fetchQuestions] = useQuestions();
   const [currentQuestion, setCurrentQuestion] = useState<null | IQuestion>(null);
 
   const getCurrentQuestion = (id: number): void => {
     if (questions) {
       setCurrentQuestion(questions[id - 1]);
-      // setCurrentQuestionId(currentQuestionId + 1);
     }
   };
 

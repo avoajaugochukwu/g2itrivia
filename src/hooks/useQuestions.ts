@@ -1,15 +1,9 @@
 import { useState } from 'react';
 import { getQuestionSessionURL } from '../utils/helper.functions';
-import IQuestion from '../interfaces/IQuestion';
+import { IQuestionContext } from '../interfaces/IQuestion';
 import { TRIVIA_BASE_URL } from '../utils/contants';
 
-interface IQuestionFetch {
-  questions: null | IQuestion[];
-  loading: boolean;
-  error: null | string;
-}
-
-const useQuestions = (): [IQuestionFetch, () => void] => {
+const useQuestions = (): [Partial<IQuestionContext>, () => void] => {
   const questionURL = getQuestionSessionURL({
     amount: 10,
     difficulty: 'hard',
@@ -18,11 +12,13 @@ const useQuestions = (): [IQuestionFetch, () => void] => {
 
   const URL = TRIVIA_BASE_URL + questionURL;
 
-  const [result, setResult] = useState<IQuestionFetch>({
-    questions: null,
+  const fetchInitialState = {
+    questions: [],
     loading: false,
     error: null,
-  });
+  };
+
+  const [result, setResult] = useState<Partial<IQuestionContext>>(fetchInitialState);
 
   // I was supposed to use axios but it kept adding a slash before the URL body
   const fetchQuestions = () => {
@@ -39,13 +35,16 @@ const useQuestions = (): [IQuestionFetch, () => void] => {
     ): Promise<void | Response> => {
       function onError(err: string): Promise<void | Response> {
         const triesLeft: number = tries - 1;
-
         if (!triesLeft) {
-          throw new Error(err);
+          setResult((prevState) => ({
+            ...prevState,
+            error: `Can not load questions: ${err}`,
+            loading: false,
+          }));
         }
-
         return wait(delay).then(() => fetchRetry(url, delay, triesLeft));
       }
+
       return fetch(url)
         .then((res) => res.json())
         .then((data) => setResult((prevState) => ({

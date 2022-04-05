@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../components/Loading/Loading';
@@ -6,14 +5,16 @@ import QuestionCard from '../../components/Question/QuestionCard';
 import { IQuestionContext } from '../../interfaces/IQuestion';
 
 import QuestionContext from '../../store/contexts/QuestionContext';
+import Error from '../Error';
 
 const Question = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { questionId } = useParams<{ questionId: string }>();
   const questionContext = useContext(QuestionContext) as IQuestionContext;
   const navigate = useNavigate();
 
   if (!questionId) return (<Loading />);
+  if (questionContext.loading) return (<Loading />);
+  if (questionContext.error) return (<Error />);
 
   const getPageNextNumber = (id: string): number => parseInt(id, 10) + 1;
 
@@ -47,7 +48,7 @@ const Question = () => {
     <>
       {/* {JSON.stringify(currentQuestion)} */}
       {
-        questionContext.questions
+        questionContext.questions && questionContext.currentQuestion
         && (
           <>
             <QuestionCard

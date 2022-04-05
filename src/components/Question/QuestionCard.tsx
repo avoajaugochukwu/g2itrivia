@@ -6,7 +6,7 @@ import { cleanString } from '../../utils/helper.functions';
 
 type Props = {
   questionNumber: number,
-  question: null | IQuestion,
+  question: IQuestion,
   handleNextQuestion: (choice: string) => void
 };
 
@@ -42,11 +42,6 @@ const QuestionCard: FC<Props> = ({ question, handleNextQuestion, questionNumber 
               <Button label="True" onClick={() => handleNextQuestion('True')} backgroundColor="#23a8cb" />
               <Button label="False" onClick={() => handleNextQuestion('False')} backgroundColor="#142850" />
             </div>
-
-            <button type="submit" className="py-10 flex items-center -mx-1 text-sm text-blue-500 capitalize transition-colors duration-200 transform hover:underline hover:text-blue-600">
-              <span className="mx-1">Next</span>
-              <svg className="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
-            </button>
           </div>
         </div>
       )}

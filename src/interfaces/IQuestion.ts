@@ -13,7 +13,7 @@ export interface IResult {
 }
 
 export interface IQuestionContext {
-  questions: null | IQuestion[];
+  questions: IQuestion[];
   loading: boolean;
   error: null | string;
   currentQuestion: null | IQuestion;
