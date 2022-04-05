@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IQuestionContext, IResult } from '../../interfaces/IQuestion';
 import QuestionContext from '../../store/contexts/QuestionContext';
 
@@ -8,6 +9,8 @@ const Result = () => {
   const questionContext = useContext(QuestionContext) as IQuestionContext;
   const [score, setScore] = useState<number>(0);
   const [results, setResults] = useState<IResult[]>([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const { result } = questionContext;
@@ -23,6 +26,11 @@ const Result = () => {
 
     setScore(count);
   }, []);
+
+  const handleRestart = () => {
+    questionContext.onRestart();
+    navigate('/');
+  };
 
   return (
     <div>
@@ -51,7 +59,7 @@ const Result = () => {
             )
           }
 
-          <button type="submit" className="py-10 flex items-center -mx-1 text-sm text-blue-500 capitalize transition-colors duration-200 transform hover:underline hover:text-blue-600">
+          <button type="submit" onClick={handleRestart} className="py-10 flex items-center -mx-1 text-sm text-blue-500 capitalize transition-colors duration-200 transform hover:underline hover:text-blue-600">
             <span className="mx-1">Restart game</span>
             <svg className="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" /></svg>
           </button>

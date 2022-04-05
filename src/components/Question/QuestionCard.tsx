@@ -24,18 +24,18 @@ const QuestionCard: FC<Props> = ({ question, handleNextQuestion, questionNumber 
               </span>
             </div>
 
-            <p className="flex text-gray-500 yellow-color">
-              {questionNumber - 1}
-              {' '}
-              / 10
-            </p>
-
             <h1 className="blue-color h-32 py-1 text-3xl font-semibold text-gray-700 capitalize">
               {question.category}
             </h1>
 
             <p className="text-gray-500 bg-gray-900 h-32 rounded-lg p-1 green-color">
               {cleanString(question.question)}
+            </p>
+
+            <p className="flex text-gray-500 yellow-color">
+              {questionNumber - 1}
+              {' '}
+              of 10
             </p>
 
             <div className="flex text-gray-500 py-10 yellow-color">

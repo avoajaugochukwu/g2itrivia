@@ -19,7 +19,7 @@ const QuestionProvider: FC<Props> = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchQuestions();
+    fetchQuestions(false);
   }, []);
 
   useEffect(() => {
@@ -40,6 +40,11 @@ const QuestionProvider: FC<Props> = ({ children }) => {
     }
   };
 
+  const onRestart = () => {
+    setResult([]);
+    fetchQuestions(true);
+  };
+
   return (
     <QuestionContext.Provider value={{
       questions,
@@ -49,6 +54,7 @@ const QuestionProvider: FC<Props> = ({ children }) => {
       getCurrentQuestion,
       scoreQuestion,
       result,
+      onRestart,
     }}
     >
       {children}

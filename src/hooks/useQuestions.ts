@@ -3,7 +3,7 @@ import { getQuestionSessionURL } from '../utils/helper.functions';
 import { IQuestionContext } from '../interfaces/IQuestion';
 import { TRIVIA_BASE_URL } from '../utils/contants';
 
-const useQuestions = (): [Partial<IQuestionContext>, () => void] => {
+const useQuestions = (): [Partial<IQuestionContext>, (restartGame: boolean) => void] => {
   const questionURL = getQuestionSessionURL({
     amount: 10,
     difficulty: 'hard',
@@ -20,8 +20,11 @@ const useQuestions = (): [Partial<IQuestionContext>, () => void] => {
 
   const [result, setResult] = useState<Partial<IQuestionContext>>(fetchInitialState);
 
-  // I was supposed to use axios but it kept adding a slash before the URL body
-  const fetchQuestions = () => {
+  const fetchQuestions = (restartGame = false) => {
+    if (restartGame) {
+      setResult(fetchInitialState);
+    }
+
     setResult((prevState) => ({ ...prevState, loading: true }));
 
     function wait(delay: number): Promise<Response> {

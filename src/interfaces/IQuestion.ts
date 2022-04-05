@@ -20,4 +20,5 @@ export interface IQuestionContext {
   getCurrentQuestion: (id: number) => void;
   scoreQuestion: (choice: string, question: IQuestion) => void;
   result: IResult[]
+  onRestart: () => void;
 }
