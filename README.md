@@ -1,6 +1,7 @@
 # My submission
 
 Visit the site [here](https://gleeful-haupia-b7bd47.netlify.app/)
+Visit the code [here](https://github.com/avoajaugochukwu/g2itrivia)
 
 ## To run app
 run: `npm install`
