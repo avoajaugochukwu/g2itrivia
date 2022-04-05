@@ -29,24 +29,14 @@ const Question = () => {
   const handleNextQuestion = (choice: string) => {
     const nextPageNumber = getPageNextNumber(questionId);
     getPage(nextPageNumber);
-    // console.log(choice, 'choice');
-    // if (!questionContext.setCurrentQuestionId) return;
-    // const newCurrentId = questionContext?.currentQuestionId + 1;
-    // questionContext.setCurrentQuestionId(newCurrentId);
     questionContext.getCurrentQuestion(nextPageNumber);
     if (questionContext.currentQuestion) {
       questionContext.scoreQuestion(choice, questionContext.currentQuestion);
     }
-    // navigate(`/question/${questionContext.currentQuestionId}`);
-    // change to constant
-    // if (questionContext.currentQuestionId === 11) {
-    //   navigate('/result');
-    // }
   };
 
   return (
     <>
-      {/* {JSON.stringify(currentQuestion)} */}
       {
         questionContext.questions && questionContext.currentQuestion
         && (

@@ -1,11 +1,8 @@
 import React, {
   useEffect, ReactNode, FC, useState,
 } from 'react';
-// import Loading from '../../components/Loading/Loading';
 import useQuestions from '../../hooks/useQuestions';
 import IQuestion, { IResult } from '../../interfaces/IQuestion';
-// import Error from '../../pages/Error';
-// import Error from '../../pages/ErrorBoundary';
 import QuestionContext from '../contexts/QuestionContext';
 
 type Props = { children: ReactNode };

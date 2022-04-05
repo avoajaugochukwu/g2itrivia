@@ -4,9 +4,8 @@ import {
 } from 'react-router-dom';
 import QuestionProvider from './store/providers/QuestionProvider';
 import TriviaLayout from './layouts/TriviaLayout';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import ErrorBoundary from './components/ErrorBoundary';
+
 import HomePage from './pages/Home';
 import QuestionPage from './pages/Question';
 import ResultPage from './pages/Result';

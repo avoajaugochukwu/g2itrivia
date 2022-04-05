@@ -62,11 +62,3 @@ const useQuestions = (): [Partial<IQuestionContext>, () => void] => {
 };
 
 export default useQuestions;
-
-// I noticed that the endpoint was failing, even after testing it on POSTMAN
-// Even the domain fails sometimes
-// I made a quick dirty fix to perform retries when it fails, so that the app will
-// WOrk in production
-// In an ideal situation, I would have informed the backend developer
-// or the devops team responsible for
-// Managing the app so that they can fix the issue.
