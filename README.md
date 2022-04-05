@@ -1,5 +1,7 @@
 # My submission
 
+Visit the site [here](https://gleeful-haupia-b7bd47.netlify.app/)
+
 ## To run app
 run: `npm install`
 then run: `npm start`
